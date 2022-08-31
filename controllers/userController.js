@@ -1,7 +1,7 @@
 const { User, Thought } = require('../models');
 
 //route/path is /api/users  
-module.exports = {
+const userController = {
   // get all users 
   getUsers(req, res) {
     User.find()
@@ -61,4 +61,6 @@ module.exports = {
 
 
   //remove friend
-}
+};
+
+module.exports = userController;

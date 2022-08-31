@@ -1,5 +1,5 @@
 const { Schema, Types } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
+// const dateFormat = require('../utils/dateFormat');
 
 //reactions schema through the Thought model
 const reactionSchema = new Schema(
@@ -17,11 +17,11 @@ const reactionSchema = new Schema(
       type: String,
       required: [true, 'you must provide a username']
     },
-    createdAt: {
-      type: Date,
-      default: Date.now(),
-      get: dateFormat
-    },
+    // createdAt: {
+    //   type: Date,
+    //   default: Date.now(),
+    //   get: dateFormat
+    // },
   },
   {
     toJSON: {
