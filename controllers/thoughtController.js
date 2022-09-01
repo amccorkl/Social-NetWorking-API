@@ -43,10 +43,20 @@ module.exports = {
     // }
   
   //create a new thought, 
-  //BUT I should find the user through their id first and then provide way to update their own account with a findOneAndUpdate
   createThought(req, res) {
     Thought.create(req.body)
-      .then((thought) => res.json(thought))
+      .then((thought) => {
+        return User.findOneAndUpdate(
+          { username: req.body.username },
+          { $addToSet: { thoughts: thought._id } },
+          { runValidators: true, new: true }
+        );
+      })
+      .then((thought) => 
+        !thought
+            ? res.status(404).json({ message: "No thought with this id " })
+            : res.status(200).json(thought)
+        )
       .catch((err) => {
         console.log(err);
         return res.status(500).json({ message: err });
@@ -57,9 +67,7 @@ module.exports = {
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      {
-        $set: { thoughtText: req.body },
-      },
+      { $set: { thoughtText: req.body }},
       { runValidators: true, new: true }
     )
       .then((thought) =>
@@ -75,11 +83,21 @@ module.exports = {
 
   // delete a thought through id
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+    Thought.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: `no thought by user with this id` })
-          : res.status(200).json({ message: "Thought  successfully deleted" })
+          ? res.status(404).json({ message: `No thought by user with this id` })
+          // delete everything by a user?
+          : User.findByIdAndUpdate(
+            { thoughts: req.params.thoughtId },
+            { $pull: { thoughts: req.params.thoughtId } },
+            { runValidators: true, new: true }
+          )
+      )
+      .then((user) => 
+        !user
+          ? res.status(404).json({ message: "Thought deleted but no user found with the id" })
+          : res.status(200).json({ message: "Thought successfully deleted and user removed from database" })
       )
       .catch((err) => {
         console.log(err);
@@ -87,10 +105,39 @@ module.exports = {
       });
   },
 
-  // delete everything by a user?
-
   // add a reaction
-
-  // delete a reaction
+  addReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: { _id: req.body } } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thoughts from this id user found." })
+          : res.status(200).json(thought)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+  // delete a reaction to a thought
+  deleteReaction(req, res) {
+    Thought.findByOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { _id: req.body.reactionId } } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with this id found" })
+          : res.status(200).json(thought)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
 };
 
