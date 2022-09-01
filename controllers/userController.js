@@ -29,7 +29,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json({ message: err }));
   },
-  // create a new user (requires username and password per model setup)
+  // create a new user (requires username per model setup)
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))

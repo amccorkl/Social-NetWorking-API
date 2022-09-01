@@ -10,10 +10,10 @@ const thoughtSchema = new Schema(
       minLength: [1, "Comments must be between 1 and 280 characters"],
       maxLength: [280, "Comments must be between 1 and 280 characters"],
     },
-    // createdAt: {
-    //   type: Date,
-    //   default: Date.now(),
-    // },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
     username: {
       type: String,
       required: [true, "A username must be provided"],
@@ -28,10 +28,10 @@ const thoughtSchema = new Schema(
   }
 );
 //creates the virtual friendCount that gets reactions
-// thoughtSchema.virtual("reactionCount")
-//   .get(function () {
-//   return this.reactions.length;
-// });
+thoughtSchema.virtual("reactionCount")
+  .get(function () {
+  return this.reactions.length;
+});
 
 //initialize the thought model
 const Thought = model("thought", thoughtSchema);
