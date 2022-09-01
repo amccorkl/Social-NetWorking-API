@@ -13,7 +13,6 @@ const thoughtSchema = new Schema(
     // createdAt: {
     //   type: Date,
     //   default: Date.now(),
-    //   get: dateFormat,
     // },
     username: {
       type: String,
@@ -29,11 +28,12 @@ const thoughtSchema = new Schema(
   }
 );
 //creates the virtual friendCount that gets reactions
-thoughtSchema.virtual("reactionCount").get(function () {
-  return this.reactions.length;
-});
+// thoughtSchema.virtual("reactionCount")
+//   .get(function () {
+//   return this.reactions.length;
+// });
 
 //initialize the thought model
-const Thought = model("Thought", thoughtSchema);
+const Thought = model("thought", thoughtSchema);
 
 module.exports = Thought;
