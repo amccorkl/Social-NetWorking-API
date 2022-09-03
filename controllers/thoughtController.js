@@ -8,8 +8,8 @@ module.exports = {
       .then((thoughts) => {
         !thoughts
           ? res
-              .status(404)
-              .json({ message: "No thoughts so far by user with this id" })
+            .status(404)
+            .json({ message: "No thoughts so far by user with this id" })
           : res.status(200).json(thoughts);
       })
       .catch((err) => {
@@ -24,8 +24,8 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res
-              .status(404)
-              .json({ message: "No thought yet by user with this id" })
+            .status(404)
+            .json({ message: "No thought yet by user with this id" })
           : res.status(200).json(thought)
       )
       .catch((err) => {
@@ -34,29 +34,29 @@ module.exports = {
       });
   },
 
-   // POST to create a new thought
-    // EXAMPLE DATA ----->
-    // {
-    //   "thoughtText": "Here's a cool thought...",
-    //   "username": "lernantino",
-    //   "userId": "5edff358a0fcb779aa7b118b"
-    // }
+  // POST to create a new thought
+  // EXAMPLE DATA ----->
+  // {
+  //   "thoughtText": "Here's a cool thought...",
+  //   "username": "lernantino",
+  //   "userId": "5edff358a0fcb779aa7b118b"
+  // }
   
   //create a new thought, 
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
         return User.findOneAndUpdate(
-          { userId: req.body.userId },
+          { username: req.body.username },
           { $addToSet: { thoughts: thought._id } },
           { runValidators: true, new: true }
         );
       })
-      .then((thought) => 
+      .then((thought) =>
         !thought
-            ? res.status(404).json({ message: "No thought with this id " })
-            : res.status(200).json(thought)
-        )
+          ? res.status(404).json({ message: "No thought with this id " })
+          : res.status(200).json(thought)
+      )
       .catch((err) => {
         console.log(err);
         return res.status(500).json({ message: err });
@@ -67,7 +67,7 @@ module.exports = {
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $set: { thoughtText: req.body }},
+      { $set: req.body },
       { runValidators: true, new: true }
     )
       .then((thought) =>
@@ -87,17 +87,16 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: `No thought by user with this id` })
-          // delete everything by a user?
-          : User.findByIdAndUpdate(
-            { thoughts: req.params.thoughtId },
-            { $pull: { thoughts: req.params.thoughtId } },
+          : User.findOneAndUpdate(
+            { username: thought.username },
+            { $pull: { thoughts: req.params.thoughtId  } },
             { runValidators: true, new: true }
           )
       )
       .then((user) => 
         !user
           ? res.status(404).json({ message: "Thought deleted but no user found with the id" })
-          : res.status(200).json({ message: "Thought successfully deleted and user removed from database" })
+          : res.status(200).json({message: "Thought successfully deleted"})
       )
       .catch((err) => {
         console.log(err);
@@ -109,7 +108,7 @@ module.exports = {
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: (req.params.thoughtId) },
-      { $addToSet: { reactions: { reactionBody: req.body.reactionBody, username: req.body.username } } },
+      { $addToSet: { reactions: req.body } },
       { runValidators: true, new: true }
     )
       .then((thought) =>
@@ -124,7 +123,7 @@ module.exports = {
   },
   // delete a reaction to a thought
   deleteReaction(req, res) {
-    Thought.findByOneAndUpdate(
+    Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { _id: req.body.reactionId } } },
       { runValidators: true, new: true }
@@ -132,7 +131,7 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with this id found" })
-          : res.status(200).json(thought)
+          : res.status(200).json({message: "Reaction successfully deleted"})
       )
       .catch((err) => {
         console.log(err);
