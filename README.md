@@ -38,7 +38,6 @@ SO THAT my website can handle large amounts of unstructured data
 ```
 - clone the repository
 - run npm init, then npm install to load all dependencies
-- 
 ```
 
 ## Usage
@@ -63,8 +62,9 @@ There are currently no tests written for this application.
 - [dotenv](https://www.npmjs.com/package/dotenv) is used to host credentials in the environment file if the creater wants to use the service. 
 
 ## Video walkthrough
-![Screenshot of users document viewed in Compass](./images/screenshot-compass.png)
-![Demo of GET routes to return all users and all thoughts being tested in Insomnia.](./Assets/18-nosql-homework-demo-01.gif)
+![Screenshot of users document viewed in Compass](./Assets/compass-db.png)
+![Screenshot of users document viewed in Compass](./Assets/insomnia-all-users.png)
+
 - [Setting up and connecting to the database, quick look at MongoDB Compass](https://drive.google.com/file/d/1GDGx0pxXmScy6KQJeMol1VbdfMkgkj2u/view?usp=sharing)
 - [users CRUD endpoints](https://drive.google.com/file/d/1tEpInBBDpP0lesNP9N59RoNktL0dhtTh/view?usp=sharing)
 - [thoughts CRUD endpoints](https://drive.google.com/file/d/1pd48BiX4hBP_G9MT0eN67vlmIv6WYHIv/view?usp=sharing)
