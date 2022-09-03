@@ -65,9 +65,13 @@ There are currently no tests written for this application.
 ## Video walkthrough
 ![Screenshot of users document viewed in Compass](./images/screenshot-compass.png)
 ![Demo of GET routes to return all users and all thoughts being tested in Insomnia.](./Assets/18-nosql-homework-demo-01.gif)
-- [Setting up and connecting to the database](https://drive.google.com/file/d/1qGAdNCsfExpdlSwJuoeDn5lGxsj8mAkk/view?usp=sharing)
-- [Creating, Reading, Updating and Deleting data using Insomnia](https://drive.google.com/file/d/1gaKlGrV2LU4pg7GPTo3Qt8Fdgc4ZnN0r/view?usp=sharing)
+- [Setting up and connecting to the database, quick look at MongoDB Compass](https://drive.google.com/file/d/1GDGx0pxXmScy6KQJeMol1VbdfMkgkj2u/view?usp=sharing)
+- [users CRUD endpoints](https://drive.google.com/file/d/1tEpInBBDpP0lesNP9N59RoNktL0dhtTh/view?usp=sharing)
+- [thoughts CRUD endpoints](https://drive.google.com/file/d/1pd48BiX4hBP_G9MT0eN67vlmIv6WYHIv/view?usp=sharing)
+- [reactions CRUD endpoints](https://drive.google.com/file/d/1tEpInBBDpP0lesNP9N59RoNktL0dhtTh/view?usp=sharing)
+- [friends CRUD endpoints](https://drive.google.com/file/d/1REoTuoxHATmUgtE8WrUJvgONHTsrUt-Y/view?usp=sharing)
+
 
 
 ## Questions and Links
-[My Github repository](https://github.com/amccorkl/E-Commerce_OOP)
+[My Github repository](https://github.com/amccorkl/Social-Networking-API)
